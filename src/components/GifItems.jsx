@@ -1,4 +1,4 @@
-export const GifItems = ({ id, url, title}) => {
+export const GifItems = ({ url, title}) => {
   return (
     <div className="card">
       <img src={ url } alt={ title } />
