@@ -5,24 +5,14 @@
   - les coloca el titulo
   - los presenta
 */
-import { useEffect, useState } from "react";
-import { getGifs } from "../helpers/getGifs";
 import { GifItems } from "./GifItems";
+import { useFetchGifs } from "../hooks/useFetchGifs";
 
 
 export const GifGrid = ({ category }) => {
 
   // Hooks
-  const [images, setImages] = useState([]);
-  useEffect( () =>{
-    getImages();
-  }, [] );
-  
-  // Funciones
-  const getImages = async() => {
-    const newImages = await getGifs(category);
-    setImages( newImages );
-  }
+  const { images, isLoading } = useFetchGifs(category);
   
   return (
     <>
