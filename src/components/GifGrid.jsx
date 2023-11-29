@@ -5,6 +5,7 @@
   - les coloca el titulo
   - los presenta
 */
+import PropTypes from 'prop-types';
 import { GifItems } from "./GifItems";
 import { useFetchGifs } from "../hooks/useFetchGifs";
 
@@ -33,4 +34,8 @@ export const GifGrid = ({ category }) => {
       </div>
     </>
   )
+}
+
+GifGrid.propTypes = {
+  category: PropTypes.string.isRequired
 }
