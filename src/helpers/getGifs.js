@@ -1,7 +1,7 @@
 // Realiza una busqueda en Giphy
 
 export const getGifs = async (category) => {
-  const url = `https://api.giphy.com/v1/gifs/search?api_key=3QuV4PHeIWMqkoQlx9bj1xFDLA711KKc&q=${ category }&limit=10`;
+  const url = `https://api.giphy.com/v1/gifs/search?api_key=frlElJKCYyKb7ubWzH0BfmKndN3KXUmd&q=${ category }&limit=10`;
 
   const resp = await fetch( url );
 
