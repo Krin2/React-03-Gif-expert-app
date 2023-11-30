@@ -32,8 +32,6 @@ describe('Test del componente AddCategory', () => {
     fireEvent.input( input, { target: { value: inputValue } } ); // Escribo en la caja de texto
     fireEvent.submit( form ); // Hago el submit del formulario
 
-    screen.debug();
-
     // 3- Verifico los resultados
     expect( input.value).toBe(''); // verifico que se borre el campo de texto al entrar en la onSubmit
 

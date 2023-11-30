@@ -16,6 +16,7 @@
     - El segundo argumento es un array con las condiciones en las que se ejecutara este codigo.
     - Cuando este array esta vacio, se ejecuta una unica vez al crear el componente.
     - El callback del useEffect no puede ser asincrono.
+    - Solo se testean los Hooks personalizados, los demas ya fueron testeados por quien los hizo.
 5. Test:
     - Configurar el ambiente de testing incluyendo las dependencias necesarias en desarrollo.
     ```
@@ -55,3 +56,81 @@
     ```
     yarn test
     ```
+
+
+# Test
+Los test siguen el patron AAA, "arrange, act, assert" en el cual primero se prepara el escenario, luego se aplica algun estimulo y finalmente se verifica que el resultado sea el esperado.
+
+## render()
+Al importar la libreria de testing de react, se tiene acceso al metodo render().
+
+Este metodo permite simular el renderizado de un componente de react para poder evaluarlo.
+```js
+import { render } from "@testing-library/react";
+
+test('Debe coincidir con el snapshot', () => {
+    const { container } = render(<Componente prop1= { prop1 } />);
+
+    expect(container).toMatchSnapshot();
+  });
+```
+
+## renderHook()
+Los Hooks no se pueden probar directamente con el render ya que no son componentes en si.
+
+Para ello jest tiene un metodo especial que es el `renderHook`, el cual permite ejecutar un hook y analizar el resultado.
+
+Este metodo devuelve 3 valores de los cuales vamos a usar el `result`.
+```js
+test('Debe regresar el estado inicial', () => { 
+    const category = 'test';
+    
+    const { result } = renderHook(() => useFetchGifs(category) );
+    const { images, isLoading } = result.current;
+
+    expect( images.length).toBe(0);
+    expect( isLoading ).toBeTruthy();
+   });
+```
+
+El result es literalmente el resultado de la ejecucion del hook, por lo que en el ejemplo anterior seria el objeto `images`
+
+## waitFor()
+El metodo `waitFor` permite esperar el resultado de evaluar un metodo asincrono.
+
+Este metodo tiene 2 argumentos, el primero es un callback que evalua el resultado del metodo asincrono y el segundo es un timeout para salir del test si no hay respuesta.
+
+```js
+import { renderHook, waitFor } from "@testing-library/react";
+
+describe('Pruebas en el hook useFetchGifs', () => { 
+  ...
+
+   test('Debe...', async() => { 
+    ...
+    
+    const { result } = renderHook(() => useFetchGifs(category) );
+    await waitFor(
+      () => expect( result.current.images.length).toBeGreaterThan(0),
+      { timeout: 1500 }
+    );
+
+    ...
+   expect(...)
+   });
+ });
+```
+
+## fireEvent
+FireEvent es una funcionalidad que permite a jest simular el disparo de eventos.
+
+Se debe seleccionar el elemento para luego disparar un evento asociado al mismo.
+
+```js
+...
+// selecciono el elemento input
+const input = screen.getByRole('textbox');
+// escribo 'algo' en el elemento
+fireEvent.input( input, { target: { value: 'algo' } } );
+...
+```
