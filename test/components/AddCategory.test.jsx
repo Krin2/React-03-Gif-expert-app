@@ -56,8 +56,7 @@ describe('Test del componente AddCategory', () => {
     // 2- Genero la accion a evaluar
     fireEvent.input( input, { target: { value: inputValue } } ); // Escribo en la caja de texto
     fireEvent.submit( form ); // Hago el submit del formulario
-
-    screen.debug();
+    // screen.debug(); // Ayuda a visualizar lo que se renderizo. Se debe eliminar una vez que el test esta terminado
 
     // 3- Verifico los resultados
     expect( onNewCategory ).not.toHaveBeenCalled(); // verifica que se haya llamado la funcion mockeada
