@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { render, screen } from "@testing-library/react";
 import { GifItems } from "../../src/components/GifItems";
 
