@@ -15,18 +15,16 @@ export const AddCategory = ({ onNewCategory }) => {
     event.preventDefault();
     const newValue = inputValue.trim();
 
-    // Verifico que haya contenido para agregar con mas de 1 caracter
-    if ( newValue.length <=1) return;
+    if ( newValue.length <=1) return; // Verifico que haya contenido para agregar con mas de 1 caracter
 
     // agrego la categoria
     // setCategories((categories) => [inputValue, ...categories]);
     onNewCategory(newValue);
 
-    // borro el input para escribir el siguiente valor
-    setInputValue('');
+    setInputValue(''); // borro el input para escribir el siguiente valor
   }
   return (
-    <form onSubmit={ onSubmit }>
+    <form onSubmit={ onSubmit } aria-label='form'>
       <input
         type='text' 
         placeholder='Buscar Gif'
@@ -38,5 +36,5 @@ export const AddCategory = ({ onNewCategory }) => {
 }
 
 AddCategory.propTypes = {
-  onNewCategory: PropTypes.func
+  onNewCategory: PropTypes.func.isRequired
 }
